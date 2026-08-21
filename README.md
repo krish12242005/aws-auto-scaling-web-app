@@ -2,9 +2,13 @@
 
 # ☁️ AWS Auto Scaling Web Application
 
+
+
 ### Highly Available & Scalable AWS Web Infrastructure using Terraform
 
+
 <p>
+ 
   <img src="https://img.shields.io/badge/AWS-Cloud-orange?style=for-the-badge&logo=amazonaws&logoColor=white" alt="AWS">
   <img src="https://img.shields.io/badge/Terraform-Infrastructure%20as%20Code-623CE4?style=for-the-badge&logo=terraform&logoColor=white" alt="Terraform">
   <img src="https://img.shields.io/badge/Linux-Amazon%20Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux">
@@ -13,7 +17,11 @@
   <img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
 </p>
 
+
+
 <p>
+  
+ 
   <strong>Production-Style AWS Cloud Architecture</strong><br>
   VPC • EC2 • ALB • Auto Scaling • CloudWatch • Terraform • Linux
 </p>
