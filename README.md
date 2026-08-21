@@ -1,1186 +1,878 @@
-\# ☁️ AWS Auto Scaling Web Application
+<div align="center">
 
+# ☁️ AWS Auto Scaling Web Application
 
+### Highly Available & Scalable AWS Web Infrastructure using Terraform
 
-!\[AWS](https://img.shields.io/badge/AWS-Cloud-orange?style=for-the-badge\&logo=amazonaws\&logoColor=white)
+<p>
+  <img src="https://img.shields.io/badge/AWS-Cloud-orange?style=for-the-badge&logo=amazonaws&logoColor=white" alt="AWS">
+  <img src="https://img.shields.io/badge/Terraform-Infrastructure%20as%20Code-623CE4?style=for-the-badge&logo=terraform&logoColor=white" alt="Terraform">
+  <img src="https://img.shields.io/badge/Linux-Amazon%20Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux">
+  <img src="https://img.shields.io/badge/Apache-Web%20Server-D22128?style=for-the-badge&logo=apache&logoColor=white" alt="Apache">
+  <img src="https://img.shields.io/badge/Git-Version%20Control-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git">
+  <img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+</p>
 
-!\[Terraform](https://img.shields.io/badge/Terraform-Infrastructure%20as%20Code-purple?style=for-the-badge\&logo=terraform\&logoColor=white)
+<p>
+  <strong>Production-Style AWS Cloud Architecture</strong><br>
+  VPC • EC2 • ALB • Auto Scaling • CloudWatch • Terraform • Linux
+</p>
 
-!\[Linux](https://img.shields.io/badge/Linux-Amazon%20Linux-yellow?style=for-the-badge\&logo=linux\&logoColor=black)
+<br>
 
-!\[EC2](https://img.shields.io/badge/Amazon-EC2-orange?style=for-the-badge\&logo=amazonec2\&logoColor=white)
+<img src="assets/aws-auto-scaling-architecture.png" alt="AWS Auto Scaling Web Application Architecture" width="900">
 
-!\[ALB](https://img.shields.io/badge/AWS-ALB-orange?style=for-the-badge\&logo=amazonaws\&logoColor=white)
+<br><br>
 
-!\[Auto Scaling](https://img.shields.io/badge/AWS-Auto%20Scaling-orange?style=for-the-badge\&logo=amazonaws\&logoColor=white)
+[![GitHub Repository](https://img.shields.io/badge/View%20Repository-GitHub-181717?style=for-the-badge\&logo=github)](https://github.com/krish12242005/aws-auto-scaling-web-app)
 
-!\[CloudWatch](https://img.shields.io/badge/AWS-CloudWatch-orange?style=for-the-badge\&logo=amazonaws\&logoColor=white)
+</div>
 
-!\[VPC](https://img.shields.io/badge/AWS-VPC-orange?style=for-the-badge\&logo=amazonaws\&logoColor=white)
+---
 
-!\[Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge\&logo=git\&logoColor=white)
+# 📌 Project Overview
 
-!\[GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge\&logo=github\&logoColor=white)
+**AWS Auto Scaling Web Application** is a highly available and scalable web application infrastructure built on **Amazon Web Services** using **Terraform Infrastructure as Code**.
 
-!\[PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge\&logo=powershell\&logoColor=white)
+The architecture is designed around a multi-AZ AWS networking model where internet traffic enters through an **Application Load Balancer**, which distributes requests across healthy **Amazon EC2** instances running **Apache HTTP Server**.
 
+The EC2 instances are managed by an **Auto Scaling Group**, while **Amazon CloudWatch** provides CPU utilization monitoring.
 
+This project demonstrates practical implementation of:
 
-\---
+* ☁️ AWS Cloud Infrastructure
+* 🌐 VPC Networking
+* 🔄 EC2 Auto Scaling
+* ⚖️ Application Load Balancing
+* 📊 CloudWatch Monitoring
+* 🔐 Security Groups
+* 🏗️ Terraform Infrastructure as Code
+* 🐧 Linux Administration
+* 🌍 Apache Web Server
+* 🧪 AWS CLI Verification
 
+---
 
-
-\## 👨‍💻 Author
-
-
-
-\### \*\*Jaikrish\*\*
-
-
-
-\*\*Junior Cloud Engineer\*\*
-
-
-
-Cloud \& DevOps enthusiast focused on:
-
-
-
-`AWS` `Terraform` `Linux` `Networking` `Infrastructure Automation`
-
-
-
-\---
-
-
-
-\## 📌 Project Overview
-
-
-
-A production-style \*\*AWS Auto Scaling Web Application\*\* designed and deployed using \*\*Terraform Infrastructure as Code (IaC)\*\*.
-
-
-
-The application runs on Amazon EC2 instances using Apache HTTP Server and is exposed to the internet through an \*\*Application Load Balancer (ALB)\*\*.
-
-
-
-An \*\*EC2 Auto Scaling Group\*\* manages the application instances and maintains high availability across multiple Availability Zones.
-
-
-
-Amazon CloudWatch monitors EC2 CPU utilization and provides high CPU monitoring.
-
-
-
-\---
-
-
-
-\## 🏗️ Architecture
-
-
+# 🏗️ Architecture
 
 ```text
-
-&#x20;                        🌐 INTERNET
-
-&#x20;                             │
-
-&#x20;                             ▼
-
-&#x20;             ┌─────────────────────────────┐
-
-&#x20;             │   Application Load Balancer │
-
-&#x20;             │          HTTP : 80          │
-
-&#x20;             │       Internet-Facing       │
-
-&#x20;             └──────────────┬──────────────┘
-
-&#x20;                            │
-
-&#x20;                            ▼
-
-&#x20;             ┌─────────────────────────────┐
-
-&#x20;             │         Target Group        │
-
-&#x20;             │           HTTP : 80         │
-
-&#x20;             │      Health Check : 80      │
-
-&#x20;             └──────────────┬──────────────┘
-
-&#x20;                            │
-
-&#x20;                 ┌──────────┴──────────┐
-
-&#x20;                 │                     │
-
-&#x20;                 ▼                     ▼
-
-&#x20;         ┌───────────────┐     ┌───────────────┐
-
-&#x20;         │    EC2 #1     │     │    EC2 #2     │
-
-&#x20;         │ Amazon Linux  │     │ Amazon Linux  │
-
-&#x20;         │    Apache     │     │    Apache     │
-
-&#x20;         │   HTTP : 80   │     │   HTTP : 80   │
-
-&#x20;         └───────┬───────┘     └───────┬───────┘
-
-&#x20;                 │                     │
-
-&#x20;                 └──────────┬──────────┘
-
-&#x20;                            │
-
-&#x20;                            ▼
-
-&#x20;             ┌─────────────────────────────┐
-
-&#x20;             │      Auto Scaling Group     │
-
-&#x20;             │                             │
-
-&#x20;             │ Minimum Capacity : 2        │
-
-&#x20;             │ Desired Capacity : 2        │
-
-&#x20;             │ Maximum Capacity : 4        │
-
-&#x20;             └──────────────┬──────────────┘
-
-&#x20;                            │
-
-&#x20;                            ▼
-
-&#x20;             ┌─────────────────────────────┐
-
-&#x20;             │         CloudWatch          │
-
-&#x20;             │      CPU Utilization        │
-
-&#x20;             │        Threshold : 70%      │
-
-&#x20;             └─────────────────────────────┘
-
+                              🌐 INTERNET
+                                   │
+                                   ▼
+                    ┌───────────────────────────┐
+                    │  Application Load         │
+                    │       Balancer (ALB)      │
+                    │         HTTP : 80         │
+                    │      Internet-Facing      │
+                    └─────────────┬─────────────┘
+                                  │
+                                  ▼
+                    ┌───────────────────────────┐
+                    │       Target Group        │
+                    │         HTTP : 80         │
+                    │      Health Check : 80    │
+                    └─────────────┬─────────────┘
+                                  │
+                       ┌──────────┴──────────┐
+                       │                     │
+                       ▼                     ▼
+                ┌──────────────┐      ┌──────────────┐
+                │    EC2 #1    │      │    EC2 #2    │
+                │ Amazon Linux │      │ Amazon Linux │
+                │    Apache    │      │    Apache    │
+                │   HTTP : 80  │      │   HTTP : 80  │
+                └──────┬───────┘      └──────┬───────┘
+                       │                     │
+                       └──────────┬──────────┘
+                                  │
+                                  ▼
+                    ┌───────────────────────────┐
+                    │     Auto Scaling Group    │
+                    │                           │
+                    │ Minimum Capacity : 2      │
+                    │ Desired Capacity : 2      │
+                    │ Maximum Capacity : 4      │
+                    └─────────────┬─────────────┘
+                                  │
+                                  ▼
+                    ┌───────────────────────────┐
+                    │        CloudWatch         │
+                    │     CPU Utilization       │
+                    │       Threshold : 70%     │
+                    └───────────────────────────┘
 ```
 
+---
 
+# 🖼️ Architecture Diagram
 
-\---
+<div align="center">
 
+<img src="assets/aws-auto-scaling-architecture.png" alt="AWS Auto Scaling Architecture Diagram" width="900">
 
+</div>
 
-\## ☁️ AWS Services
+---
 
+# ☁️ AWS Services
 
+| AWS Service                         | Purpose                                              |
+| ----------------------------------- | ---------------------------------------------------- |
+| **Amazon VPC**                      | Provides isolated networking for the application     |
+| **Amazon EC2**                      | Runs the Apache web application                      |
+| **Application Load Balancer**       | Distributes incoming HTTP traffic                    |
+| **Target Group**                    | Registers EC2 targets and performs health checks     |
+| **Auto Scaling Group**              | Maintains and scales EC2 capacity                    |
+| **Amazon CloudWatch**               | Monitors EC2 CPU utilization                         |
+| **Internet Gateway**                | Provides internet connectivity to public resources   |
+| **NAT Gateway**                     | Provides outbound connectivity for private resources |
+| **Security Groups**                 | Controls network traffic                             |
+| **Systems Manager Parameter Store** | Provides centralized parameter storage               |
 
-\- \*\*Amazon VPC\*\*
+---
 
-\- \*\*Amazon EC2\*\*
+# 🛠️ Technology Stack
 
-\- \*\*Application Load Balancer\*\*
+## ☁️ Cloud
 
-\- \*\*EC2 Auto Scaling Group\*\*
+<p>
+<img src="https://img.shields.io/badge/Amazon%20Web%20Services-AWS-orange?style=flat-square&logo=amazonaws&logoColor=white">
+<img src="https://img.shields.io/badge/EC2-Compute-orange?style=flat-square&logo=amazonaws&logoColor=white">
+<img src="https://img.shields.io/badge/VPC-Networking-orange?style=flat-square&logo=amazonaws&logoColor=white">
+<img src="https://img.shields.io/badge/ALB-Load%20Balancing-orange?style=flat-square&logo=amazonaws&logoColor=white">
+<img src="https://img.shields.io/badge/CloudWatch-Monitoring-orange?style=flat-square&logo=amazonaws&logoColor=white">
+</p>
 
-\- \*\*Target Groups\*\*
+## 🏗️ Infrastructure as Code
 
-\- \*\*Amazon CloudWatch\*\*
+<p>
+<img src="https://img.shields.io/badge/Terraform-IaC-623CE4?style=flat-square&logo=terraform&logoColor=white">
+</p>
 
-\- \*\*NAT Gateway\*\*
+## 🐧 Operating System & Web Server
 
-\- \*\*Internet Gateway\*\*
+<p>
+<img src="https://img.shields.io/badge/Amazon%20Linux-OS-FCC624?style=flat-square&logo=linux&logoColor=black">
+<img src="https://img.shields.io/badge/Apache-HTTP%20Server-D22128?style=flat-square&logo=apache&logoColor=white">
+</p>
 
-\- \*\*Security Groups\*\*
+## 🔧 DevOps & Tools
 
-\- \*\*AWS Systems Manager Parameter Store\*\*
+<p>
+<img src="https://img.shields.io/badge/AWS%20CLI-Command%20Line-orange?style=flat-square&logo=amazonaws&logoColor=white">
+<img src="https://img.shields.io/badge/Git-Version%20Control-F05032?style=flat-square&logo=git&logoColor=white">
+<img src="https://img.shields.io/badge/GitHub-Code%20Hosting-181717?style=flat-square&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/PowerShell-Automation-5391FE?style=flat-square&logo=powershell&logoColor=white">
+</p>
 
+---
 
+# 🌐 Network Architecture
 
-\---
+The infrastructure follows a **multi-AZ VPC architecture** designed for availability, controlled network access, and secure application communication.
 
+## Public Subnets
 
+Public subnets are used for internet-facing infrastructure.
 
-\## 🛠️ Tech Stack
+Resources include:
 
+* Application Load Balancer
+* NAT Gateway
+* Internet Gateway connectivity
 
+## Private Subnets
 
-\### Cloud
+Private subnets are used for application workloads.
 
+Resources include:
 
+* EC2 instances
+* Auto Scaling Group
+* Apache web servers
 
-`AWS` `VPC` `EC2` `ALB` `Auto Scaling` `CloudWatch`
+The EC2 application servers are not intended to be directly exposed to the public internet.
 
+## Internet Gateway
 
+The Internet Gateway provides internet connectivity for public subnet resources.
 
-\### Infrastructure as Code
+## NAT Gateway
 
+The NAT Gateway provides outbound internet connectivity for private subnet resources without requiring direct inbound internet access.
 
+## Route Tables
 
-`Terraform`
+Separate routing is used to control traffic between public and private subnets.
 
+## Multi-AZ Architecture
 
+The EC2 instances are distributed across Availability Zones to improve application availability and provide fault tolerance.
 
-\### Operating System \& Web Server
+---
 
+# ⚖️ Application Load Balancer
 
+The Application Load Balancer acts as the public entry point for the application.
 
-`Amazon Linux` `Linux` `Apache HTTP Server`
+### ALB Configuration
 
+| Configuration | Value                          |
+| ------------- | ------------------------------ |
+| Name          | `aws-auto-scaling-web-app-alb` |
+| Type          | Application Load Balancer      |
+| Scheme        | Internet-facing                |
+| Protocol      | HTTP                           |
+| Port          | `80`                           |
+| State         | Active                         |
 
-
-\### DevOps \& Tools
-
-
-
-`AWS CLI` `Git` `GitHub` `PowerShell`
-
-
-
-\---
-
-
-
-\## 🌐 Network Architecture
-
-
-
-The infrastructure follows a multi-AZ VPC design.
-
-
-
-\### Public Subnets
-
-
-
-Used for internet-facing resources such as:
-
-
-
-\- Application Load Balancer
-
-\- Internet Gateway connectivity
-
-\- NAT Gateway
-
-
-
-\### Private Subnets
-
-
-
-Used for application workloads:
-
-
-
-\- EC2 instances
-
-\- Auto Scaling Group
-
-\- Apache web servers
-
-
-
-\### Internet Gateway
-
-
-
-Provides internet connectivity for public subnet resources.
-
-
-
-\### NAT Gateway
-
-
-
-Provides outbound internet connectivity for resources deployed inside private subnets.
-
-
-
-\---
-
-
-
-\## ⚖️ Application Load Balancer
-
-
-
-The Application Load Balancer distributes incoming HTTP traffic across healthy EC2 instances.
-
-
-
-\### Configuration
-
-
+### Traffic Flow
 
 ```text
-
-Name       : aws-auto-scaling-web-app-alb
-
-Scheme     : internet-facing
-
-Type       : application
-
-Protocol   : HTTP
-
-Port       : 80
-
-State      : active
-
+Internet
+   ↓
+Application Load Balancer
+   ↓
+Target Group
+   ↓
+Healthy EC2 Instances
+   ↓
+Apache HTTP Server
+   ↓
+HTML Response
 ```
 
+---
 
+# 🎯 Target Group
 
-\### Target Group
+The Target Group connects the Application Load Balancer with the EC2 application instances.
 
+| Configuration         | Value                         |
+| --------------------- | ----------------------------- |
+| Name                  | `aws-auto-scaling-web-app-tg` |
+| Protocol              | HTTP                          |
+| Port                  | `80`                          |
+| Health Check Protocol | HTTP                          |
+| Health Check Port     | `80`                          |
 
+The Target Group performs health checks and routes application traffic only to healthy targets.
+
+### Verified Target Health
 
 ```text
-
-Name       : aws-auto-scaling-web-app-tg
-
-Protocol   : HTTP
-
-Port       : 80
-
+Target 1 : healthy
+Target 2 : healthy
 ```
 
+---
 
+# 🔄 Auto Scaling Group
 
-\### Health Check
+The application uses an EC2 Auto Scaling Group to maintain application availability and manage compute capacity.
 
+| Configuration      |                          Value |
+| ------------------ | -----------------------------: |
+| Auto Scaling Group | `aws-auto-scaling-web-app-asg` |
+| Minimum Capacity   |                              2 |
+| Desired Capacity   |                              2 |
+| Maximum Capacity   |                              4 |
 
+### Auto Scaling Benefits
 
-```text
+* High availability
+* Automatic instance replacement
+* Fault recovery
+* Capacity management
+* Horizontal scaling
+* Multi-AZ deployment
+* Improved application reliability
 
-Protocol   : HTTP
+---
 
-Port       : 80
+# 📊 CloudWatch Monitoring
 
-```
+Amazon CloudWatch provides monitoring visibility for EC2 CPU utilization.
 
+### High CPU Alarm
 
+| Configuration      | Value                               |
+| ------------------ | ----------------------------------- |
+| Alarm Name         | `aws-auto-scaling-web-app-high-cpu` |
+| Metric             | `CPUUtilization`                    |
+| Namespace          | `AWS/EC2`                           |
+| Statistic          | Average                             |
+| Period             | 60 seconds                          |
+| Evaluation Periods | 2                                   |
+| Threshold          | 70%                                 |
 
-Both EC2 instances were successfully registered as healthy targets.
+The alarm monitors CPU utilization and provides visibility into high resource usage.
 
+---
 
+# 💻 Web Application
 
-\---
+The EC2 instances run **Apache HTTP Server on Amazon Linux**.
 
-
-
-\## 🔄 Auto Scaling Group
-
-
-
-The application uses an EC2 Auto Scaling Group to maintain availability.
-
-
-
-```text
-
-Auto Scaling Group : aws-auto-scaling-web-app-asg
-
-
-
-Minimum Capacity   : 2
-
-Desired Capacity   : 2
-
-Maximum Capacity   : 4
-
-```
-
-
-
-The Auto Scaling Group maintains a minimum of two EC2 instances and can scale up to four instances when required.
-
-
-
-\---
-
-
-
-\## 📊 CloudWatch Monitoring
-
-
-
-Amazon CloudWatch monitors EC2 CPU utilization.
-
-
-
-\### High CPU Alarm
-
-
+### Application Output
 
 ```text
-
-Alarm Name        : aws-auto-scaling-web-app-high-cpu
-
-Metric            : CPUUtilization
-
-Namespace         : AWS/EC2
-
-Statistic         : Average
-
-Period            : 60 seconds
-
-Evaluation Period : 2
-
-Threshold         : 70%
-
-```
-
-
-
-This provides monitoring for high CPU utilization within the Auto Scaling environment.
-
-
-
-\---
-
-
-
-\## 💻 Web Application
-
-
-
-The EC2 instances run an Apache HTTP Server on Amazon Linux.
-
-
-
-The application displays:
-
-
-
-```text
-
 AWS Auto Scaling Web App
-
-
 
 Instance is running successfully!
 
-
-
 Managed by Auto Scaling Group + ALB
-
 ```
 
-
-
-The application was successfully tested through the Application Load Balancer.
-
-
-
-\### HTTP Response
-
-
+### Application Verification
 
 ```text
-
 HTTP/1.1 200 OK
-
 Server: Apache/2.4.68 (Amazon Linux)
-
 Content-Type: text/html
-
 ```
 
+---
 
+# 🔐 Security Architecture
 
-\---
+Security Groups are used to control communication between the Application Load Balancer and EC2 instances.
 
+## ALB Security Group
 
+```text
+Protocol : TCP
+Port     : 80
+Source   : 0.0.0.0/0
+```
 
-\# 📸 Screenshots
+The internet-facing ALB accepts HTTP requests from the internet.
 
+## EC2 Security Group
 
+The EC2 security group is designed to allow application traffic from the ALB security group rather than exposing the application servers directly to the internet.
 
-\## 🟢 Target Group — Healthy Instances
+### Security Principles
 
+* Public subnets for internet-facing infrastructure
+* Private subnets for application workloads
+* ALB as the public application entry point
+* Security Groups for traffic control
+* NAT Gateway for private subnet outbound connectivity
+* No direct public application access to private EC2 instances
+* Least-privilege security group rules
 
+> **Note:** This project currently uses HTTP on port 80. HTTPS/SSL is not claimed as part of the current implementation.
 
-Both EC2 instances are successfully registered as healthy targets.
+---
 
+# 📈 Scaling Behavior
 
+### Normal Capacity
 
-!\[Target Group Healthy Instances](screenshots/target-group-healthy.jpg)
+```text
+EC2 #1
+EC2 #2
+```
 
+### Increased Workload
 
+```text
+EC2 #1
+EC2 #2
+EC2 #3
+```
 
-\---
+### Maximum Capacity
 
-
-
-\## 🔄 Auto Scaling Group
-
-
+```text
+EC2 #1
+EC2 #2
+EC2 #3
+EC2 #4
+```
 
 The Auto Scaling Group is configured with:
 
-
-
 ```text
-
 Minimum : 2
-
 Desired : 2
-
 Maximum : 4
-
 ```
 
+This allows the environment to maintain a baseline of two instances while supporting additional EC2 capacity when scaling conditions are met.
 
+---
 
-!\[Auto Scaling Group](screenshots/auto-scaling-group.jpg)
-
-
-
-\---
-
-
-
-\## 📊 CloudWatch Monitoring
-
-
-
-CloudWatch monitors EC2 CPU utilization with a high CPU threshold of 70%.
-
-
-
-!\[CloudWatch Monitoring](screenshots/cloudwatch-monitoring.jpg)
-
-
-
-\---
-
-
-
-\## 🧪 Infrastructure Verification
-
-
-
-The deployed infrastructure was verified using AWS CLI.
-
-
-
-\### Target Health
-
-
+# 🔄 Application Request Flow
 
 ```text
-
-Target 1 : healthy
-
-Target 2 : healthy
-
+                    USER REQUEST
+                         │
+                         ▼
+                     INTERNET
+                         │
+                         ▼
+              APPLICATION LOAD
+                  BALANCER
+                         │
+                         ▼
+                  TARGET GROUP
+                         │
+                 ┌───────┴───────┐
+                 ▼               ▼
+              EC2 #1           EC2 #2
+                 │               │
+                 ▼               ▼
+              Apache           Apache
+                 │               │
+                 └───────┬───────┘
+                         ▼
+                   HTML RESPONSE
 ```
 
+---
 
+# 🧩 Infrastructure as Code
 
-\### Auto Scaling Group
+The complete infrastructure is managed using **Terraform**.
 
+Terraform provisions and manages:
 
+* VPC
+* Public Subnets
+* Private Subnets
+* Route Tables
+* Internet Gateway
+* NAT Gateway
+* Security Groups
+* EC2 Launch Template
+* Application Load Balancer
+* Target Group
+* Auto Scaling Group
+* CloudWatch Alarm
 
-```text
+### Terraform Benefits
 
-Minimum : 2
+* Repeatable infrastructure deployment
+* Version-controlled infrastructure
+* Consistent environments
+* Automated provisioning
+* Easier maintenance
+* Infrastructure reproducibility
 
-Desired : 2
+---
 
-Maximum : 4
-
-```
-
-
-
-\### Load Balancer
-
-
-
-```text
-
-Scheme : internet-facing
-
-State  : active
-
-Type   : application
-
-```
-
-
-
-\### Application Test
-
-
+# 📁 Project Structure
 
 ```text
-
-HTTP/1.1 200 OK
-
-```
-
-
-
-Successful traffic flow:
-
-
-
-```text
-
-Internet
-
-&#x20;  ↓
-
-Application Load Balancer
-
-&#x20;  ↓
-
-Target Group
-
-&#x20;  ↓
-
-EC2 Instances
-
-&#x20;  ↓
-
-Apache Web Server
-
-&#x20;  ↓
-
-HTML Response
-
-```
-
-
-
-\---
-
-
-
-\## 🔐 Security
-
-
-
-The project uses AWS Security Groups to control network traffic.
-
-
-
-\### ALB Security Group
-
-
-
-```text
-
-Protocol : TCP
-
-Port     : 80
-
-Source   : 0.0.0.0/0
-
-```
-
-
-
-The internet-facing ALB accepts HTTP traffic from the internet.
-
-
-
-\### EC2 Security
-
-
-
-EC2 instances are deployed behind the Application Load Balancer and protected using security group rules.
-
-
-
-\### Network Security
-
-
-
-\- Public subnets for internet-facing resources
-
-\- Private subnets for EC2 workloads
-
-\- NAT Gateway for outbound private subnet connectivity
-
-\- Internet Gateway for public subnet connectivity
-
-\- Security Groups for traffic control
-
-
-
-\---
-
-
-
-\## 📁 Project Structure
-
-
-
-```text
-
 aws-auto-scaling-web-app/
-
 │
-
 ├── app/
-
 │   └── index.html
-
 │
-
+├── assets/
+│   └── aws-auto-scaling-architecture.png
+│
 ├── screenshots/
-
+│   ├── target-group-healthy.jpg
 │   ├── auto-scaling-group.jpg
-
-│   ├── cloudwatch-monitoring.jpg
-
-│   └── target-group-healthy.jpg
-
+│   └── cloudwatch-monitoring.jpg
 │
-
 ├── scripts/
-
 │
-
 ├── terraform/
-
 │   ├── alb.tf
-
 │   ├── autoscaling.tf
-
 │   ├── cloudwatch.tf
-
 │   ├── launch-template.tf
-
 │   ├── main.tf
-
 │   ├── outputs.tf
-
 │   ├── provider.tf
-
 │   ├── security-groups.tf
-
 │   ├── variables.tf
-
 │   └── .terraform.lock.hcl
-
 │
-
 ├── .gitignore
-
 └── README.md
-
 ```
 
+---
 
+# 📸 Project Screenshots
 
-\---
+## 🟢 Target Group — Healthy Instances
 
+Both application targets were verified as healthy in the Application Load Balancer Target Group.
 
+<div align="center">
 
-\# 🚀 Deployment
+<img src="screenshots/target-group-healthy.jpg" alt="AWS Target Group Healthy Instances" width="850">
 
+</div>
 
+---
 
-\## 1. Clone Repository
+## 🔄 Auto Scaling Group
 
-
-
-```bash
-
-git clone https://github.com/krish12242005/aws-auto-scaling-web-app.git
-
-cd aws-auto-scaling-web-app
-
-```
-
-
-
-\## 2. Configure AWS CLI
-
-
-
-Configure AWS credentials:
-
-
-
-```bash
-
-aws configure
-
-```
-
-
-
-Verify the AWS account:
-
-
-
-```bash
-
-aws sts get-caller-identity
-
-```
-
-
-
-\## 3. Navigate to Terraform
-
-
-
-```bash
-
-cd terraform
-
-```
-
-
-
-\## 4. Initialize Terraform
-
-
-
-```bash
-
-terraform init
-
-```
-
-
-
-\## 5. Validate Configuration
-
-
-
-```bash
-
-terraform validate
-
-```
-
-
-
-\## 6. Review Infrastructure
-
-
-
-```bash
-
-terraform plan
-
-```
-
-
-
-\## 7. Deploy Infrastructure
-
-
-
-```bash
-
-terraform apply
-
-```
-
-
-
-Enter:
-
-
+The Auto Scaling Group is configured with:
 
 ```text
+Minimum : 2
+Desired : 2
+Maximum : 4
+```
 
+<div align="center">
+
+<img src="screenshots/auto-scaling-group.jpg" alt="AWS Auto Scaling Group Configuration" width="850">
+
+</div>
+
+---
+
+## 📊 CloudWatch Monitoring
+
+CloudWatch provides CPU utilization monitoring with a configured high CPU threshold of 70%.
+
+<div align="center">
+
+<img src="screenshots/cloudwatch-monitoring.jpg" alt="AWS CloudWatch CPU Monitoring" width="850">
+
+</div>
+
+---
+
+# 🚀 Deployment
+
+## 1. Clone Repository
+
+```bash
+git clone https://github.com/krish12242005/aws-auto-scaling-web-app.git
+cd aws-auto-scaling-web-app
+```
+
+## 2. Configure AWS CLI
+
+```bash
+aws configure
+```
+
+Verify the AWS identity:
+
+```bash
+aws sts get-caller-identity
+```
+
+## 3. Navigate to Terraform
+
+```bash
+cd terraform
+```
+
+## 4. Initialize Terraform
+
+```bash
+terraform init
+```
+
+## 5. Validate Configuration
+
+```bash
+terraform validate
+```
+
+Expected result:
+
+```text
+Success! The configuration is valid.
+```
+
+## 6. Review Infrastructure
+
+```bash
+terraform plan
+```
+
+Review the infrastructure changes before deployment.
+
+## 7. Deploy Infrastructure
+
+```bash
+terraform apply
+```
+
+Confirm with:
+
+```text
 yes
-
 ```
 
-
-
-\## 8. Get ALB DNS
-
-
+## 8. Get Application Load Balancer DNS
 
 ```bash
-
-terraform output alb\_dns\_name
-
+terraform output alb_dns_name
 ```
 
+Open the returned ALB DNS name:
 
-
-Open the returned ALB DNS name using HTTP.
-
-
-
-\---
-
-
-
-\## 🔍 Useful Verification Commands
-
-
-
-\### Check Auto Scaling Group
-
-
-
-```bash
-
-aws autoscaling describe-auto-scaling-groups \\
-
-&#x20; --auto-scaling-group-names aws-auto-scaling-web-app-asg \\
-
-&#x20; --region ap-south-1
-
+```text
+http://<ALB-DNS-NAME>
 ```
 
+---
 
+# 🔍 Infrastructure Verification
 
-\### Check Target Health
+## Check Auto Scaling Group
 
+### PowerShell
 
-
-```bash
-
-aws elbv2 describe-target-health \\
-
-&#x20; --target-group-arn "<TARGET\_GROUP\_ARN>" \\
-
-&#x20; --region ap-south-1
-
+```powershell
+aws autoscaling describe-auto-scaling-groups `
+  --auto-scaling-group-names aws-auto-scaling-web-app-asg `
+  --region ap-south-1
 ```
 
+## Check Target Health
 
-
-\### Check Load Balancer
-
-
-
-```bash
-
-aws elbv2 describe-load-balancers \\
-
-&#x20; --names aws-auto-scaling-web-app-alb \\
-
-&#x20; --region ap-south-1
-
+```powershell
+aws elbv2 describe-target-health `
+  --target-group-arn "<TARGET_GROUP_ARN>" `
+  --region ap-south-1
 ```
 
+## Check Load Balancer
 
+```powershell
+aws elbv2 describe-load-balancers `
+  --names aws-auto-scaling-web-app-alb `
+  --region ap-south-1
+```
 
-\### Test Application
+## Test Application
 
-
-
-```bash
-
+```powershell
 curl.exe -I http://<ALB-DNS-NAME>
-
 ```
-
-
 
 Expected response:
 
-
-
 ```text
-
 HTTP/1.1 200 OK
-
 ```
 
+---
 
+# 🧪 Verification Checklist
 
-\---
+* [x] VPC deployed
+* [x] Public subnets configured
+* [x] Private subnets configured
+* [x] Internet Gateway configured
+* [x] NAT Gateway configured
+* [x] Application Load Balancer active
+* [x] Target Group configured
+* [x] EC2 targets verified healthy
+* [x] Auto Scaling Group configured
+* [x] CloudWatch monitoring configured
+* [x] Apache web server running
+* [x] HTTP 200 response verified
+* [x] Terraform infrastructure deployed
+* [x] AWS CLI verification completed
 
+---
 
-
-\## 🧹 Cleanup
-
-
-
-To remove the AWS infrastructure created by Terraform:
-
-
-
-```bash
-
-cd terraform
-
-terraform destroy
-
-```
-
-
-
-Enter:
-
-
-
-```text
-
-yes
-
-```
-
-
-
-> ⚠️ \*\*Warning:\*\* `terraform destroy` removes the AWS resources managed by this Terraform project.
-
-
-
-\---
-
-
-
-\# 🎯 Key Learning Outcomes
-
-
+# 🎯 Key Learning Outcomes
 
 Through this project, I gained hands-on experience with:
 
+* AWS VPC Architecture
+* Public and Private Subnet Design
+* Multi-AZ Networking
+* Internet Gateway
+* NAT Gateway
+* Route Tables
+* Security Groups
+* Amazon EC2
+* EC2 Launch Templates
+* Application Load Balancer
+* Target Groups
+* EC2 Auto Scaling
+* Amazon CloudWatch
+* Terraform Infrastructure as Code
+* AWS CLI
+* Linux Administration
+* Apache HTTP Server
+* Git
+* GitHub
+* AWS Infrastructure Troubleshooting
+
+---
+
+# 📌 Project Highlights
+
+<div align="center">
+
+| Capability                 | Implementation            |
+| -------------------------- | ------------------------- |
+| ☁️ Cloud Platform          | AWS                       |
+| 🏗️ Infrastructure as Code | Terraform                 |
+| 🌐 Networking              | Amazon VPC                |
+| ⚖️ Load Balancing          | Application Load Balancer |
+| 🖥️ Compute                | Amazon EC2                |
+| 🔄 Auto Scaling            | EC2 Auto Scaling Group    |
+| 📊 Monitoring              | Amazon CloudWatch         |
+| 🐧 Operating System        | Amazon Linux              |
+| 🌍 Web Server              | Apache                    |
+| 🔐 Security                | Security Groups           |
+| 🌐 Architecture            | Multi-AZ                  |
+| 🧪 Verification            | AWS CLI                   |
+| 📦 Version Control         | Git + GitHub              |
+
+</div>
+
+---
+
+# 💡 Why This Project Matters
+
+This project demonstrates practical cloud engineering by combining multiple AWS services into a complete application infrastructure rather than using individual AWS services independently.
+
+The architecture combines:
+
+```text
+Networking
+     +
+Compute
+     +
+Load Balancing
+     +
+Auto Scaling
+     +
+Monitoring
+     +
+Infrastructure as Code
+     +
+Security
+```
 
+This represents a **production-style architecture pattern** commonly used for highly available and scalable web applications.
 
-\- AWS VPC architecture
+---
 
-\- Public and private subnet design
+# 🏆 Project Status
 
-\- Multi-AZ networking
+<div align="center">
 
-\- Internet Gateway
+| Component                 | Status        |
+| ------------------------- | ------------- |
+| Terraform Infrastructure  | ✅ Deployed    |
+| Application Load Balancer | ✅ Active      |
+| Target Group              | ✅ Healthy     |
+| EC2 Instances             | ✅ 2 Running   |
+| Auto Scaling Group        | ✅ Enabled     |
+| CloudWatch Monitoring     | ✅ Enabled     |
+| Apache Web Server         | ✅ Running     |
+| Application Test          | ✅ HTTP 200 OK |
+| Network Architecture      | ✅ Multi-AZ    |
+| Infrastructure Management | ✅ Terraform   |
 
-\- NAT Gateway
+</div>
 
-\- Security Groups
+---
 
-\- EC2 provisioning
+# 👨‍💻 About the Author
 
-\- Launch Templates
+<div align="center">
 
-\- Application Load Balancer
+## Jaikrish
 
-\- Target Groups
+### Junior Cloud Engineer
 
-\- EC2 Auto Scaling
+**AWS Cloud • DevOps • Linux • Networking • Terraform**
 
-\- CloudWatch monitoring
+Junior Cloud Engineer focused on building and managing reliable cloud infrastructure using AWS, Terraform, Linux, Networking, and DevOps technologies.
 
-\- Terraform Infrastructure as Code
+<br>
 
-\- AWS CLI
+<img src="https://img.shields.io/badge/AWS-Cloud-orange?style=for-the-badge&logo=amazonaws&logoColor=white">
+<img src="https://img.shields.io/badge/Terraform-IaC-623CE4?style=for-the-badge&logo=terraform&logoColor=white">
+<img src="https://img.shields.io/badge/Linux-System%20Administration-FCC624?style=for-the-badge&logo=linux&logoColor=black">
+<img src="https://img.shields.io/badge/Networking-Infrastructure-0078D4?style=for-the-badge">
+<img src="https://img.shields.io/badge/DevOps-Automation-2496ED?style=for-the-badge">
 
-\- Linux administration
+</div>
 
-\- Apache web server
+---
 
-\- Git and GitHub
+# 🧠 Core Skills
 
-\- AWS infrastructure troubleshooting
+```text
+AWS
+Terraform
+Linux
+Networking
+Amazon EC2
+Amazon VPC
+Application Load Balancer
+Auto Scaling
+CloudWatch
+AWS CLI
+Git
+GitHub
+Apache
+Infrastructure as Code
+```
 
+---
 
+# ⭐ Project Repository
 
-\---
+<div align="center">
 
+### 🔗 GitHub Repository
 
+[![View Repository](https://img.shields.io/badge/View%20Project%20on%20GitHub-181717?style=for-the-badge\&logo=github\&logoColor=white)](https://github.com/krish12242005/aws-auto-scaling-web-app)
 
-\# 📌 Project Highlights
+<br>
 
+If you found this project useful, consider giving the repository a ⭐
 
+</div>
 
-\- ✅ Infrastructure as Code using Terraform
+---
 
-\- ✅ Highly available EC2 architecture
+# 🧹 Cleanup
 
-\- ✅ Application Load Balancer
+To remove the AWS infrastructure created and managed by Terraform:
 
-\- ✅ Auto Scaling Group
+```bash
+cd terraform
+terraform destroy
+```
 
-\- ✅ Multi-AZ deployment
+Confirm:
 
-\- ✅ Two healthy EC2 instances
+```text
+yes
+```
 
-\- ✅ Target Group health checks
+> ⚠️ **Warning:** `terraform destroy` removes AWS resources managed by this Terraform project. Review the Terraform plan carefully before confirming.
 
-\- ✅ CloudWatch CPU monitoring
+---
 
-\- ✅ Linux + Apache web server
+<div align="center">
 
-\- ✅ AWS CLI verification
+## ☁️ AWS Auto Scaling Web Application
 
-\- ✅ Private subnet architecture
+**Built with AWS + Terraform + Linux + DevOps**
 
-\- ✅ NAT Gateway
+<br>
 
-\- ✅ GitHub version control
+**Jaikrish — Junior Cloud Engineer**
 
+<br>
 
+[![GitHub](https://img.shields.io/badge/GitHub-krish12242005-181717?style=for-the-badge\&logo=github)](https://github.com/krish12242005)
 
-\---
-
-
-
-\# 👨‍💻 About the Author
-
-
-
-\## \*\*Jaikrish\*\*
-
-
-
-\*\*Junior Cloud Engineer\*\*
-
-
-
-Cloud \& DevOps enthusiast interested in building and managing reliable cloud infrastructure using AWS, Terraform, Linux, Networking, and DevOps technologies.
-
-
-
-\### Core Skills
-
-
-
-`AWS` `Terraform` `Linux` `Networking` `EC2` `VPC` `ALB` `Auto Scaling` `CloudWatch` `Git` `GitHub`
-
-
-
-\---
-
-
-
-\## ⭐ Project Repository
-
-
-
-\*\*GitHub Repository:\*\*
-
-
-
-https://github.com/krish12242005/aws-auto-scaling-web-app
-
-
-
-If you found this project useful, consider giving the repository a ⭐.
-
-
-
-\---
-
-
-
-<p align="center">
-
-&#x20; <b>Built with ☁️ AWS + 🏗️ Terraform + 🐧 Linux + 🚀 DevOps</b>
-
-</p>
-
+</div>
