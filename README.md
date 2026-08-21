@@ -20,10 +20,7 @@
 
 <br>
 
-<img src="assets/aws-auto-scaling-architecture.png" alt="AWS Auto Scaling Web Application Architecture" width="900">
-
 <br><br>
-
 [![GitHub Repository](https://img.shields.io/badge/View%20Repository-GitHub-181717?style=for-the-badge\&logo=github)](https://github.com/krish12242005/aws-auto-scaling-web-app)
 
 </div>
